@@ -11,7 +11,7 @@ class GasViewSet(ModelViewSet):
         if request.GET.get('sensed') is None:
             queryset = Gas.objects.all()
         else:
-            sensed = int(request.GET.get('sensed')) / 1000
+            sensed = int(request.GET.get('sensed'))
             start_at = datetime.fromtimestamp(sensed)
             end_at = datetime.fromtimestamp(sensed + 600)
             queryset = Gas.objects.filter(sensed__range=(start_at, end_at))
