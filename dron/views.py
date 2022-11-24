@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from rest_framework.response import Response
 from .models import Gas, Video
 from rest_framework.viewsets import ModelViewSet
@@ -5,8 +7,14 @@ from .serializers import GasSerializer, VideoSerializer
 
 
 class GasViewSet(ModelViewSet):
-    def get(self, request):
-        queryset = Gas.objects.all()
+    def list(self, request):
+        if request.GET.get('sensed') is None:
+            queryset = Gas.objects.all()
+        else:
+            sensed = int(request.GET.get('sensed')) / 1000
+            start_at = datetime.fromtimestamp(sensed)
+            end_at = datetime.fromtimestamp(sensed + 600)
+            queryset = Gas.objects.filter(sensed__range=(start_at, end_at))
         serializer = GasSerializer(queryset, many=True)
         return Response(serializer.data)
 
