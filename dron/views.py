@@ -18,6 +18,11 @@ class GasViewSet(ModelViewSet):
         serializer = GasSerializer(queryset, many=True)
         return Response(serializer.data)
 
+    def retrieve(self, request, *args, **kwargs):
+        queryset = Gas.objects.latest('id')
+        serializer = GasSerializer(queryset)
+        return Response(serializer.data)
+
 
 class VideoViewSet(ModelViewSet):
     def list(self, request):

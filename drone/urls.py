@@ -20,6 +20,7 @@ from dron.views import GasViewSet, VideoViewSet
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dron/gas', GasViewSet.as_view({'get': 'list'})),
+    path('dron/gas/latest', GasViewSet.as_view({'get': 'retrieve'})),
     path('dron/videos', VideoViewSet.as_view(actions={'get': 'list'}), name='video'),
     path('dron/video/<int:id>', VideoViewSet.as_view(actions={'get': 'retrieve'}), name='video')
 ]
