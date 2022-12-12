@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from dron.views import GasViewSet, VideoViewSet, DronViewSet
+from dron.views import GasViewSet, VideoViewSet, DronViewSet, ImageViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +24,7 @@ urlpatterns = [
     path('dron/videos', VideoViewSet.as_view(actions={'get': 'list'}), name='video'),
     path('dron/video/<int:id>', VideoViewSet.as_view(actions={'get': 'retrieve'}), name='video'),
     path('dron/list', DronViewSet.as_view(actions={'get': 'list'}), name='dron'),
-    path('dron/detail/<int:id>', DronViewSet.as_view(actions={'get': 'retrieve'}), name='dron')
+    path('dron/detail/<int:id>', DronViewSet.as_view(actions={'get': 'retrieve'}), name='dron'),
+    path('dron/image/list', ImageViewSet.as_view(actions={'get': 'list'}), name='image'),
+    path('dron/image/detail/<int:id>', ImageViewSet.as_view(actions={'get': 'retrieve'}), name='image')
 ]

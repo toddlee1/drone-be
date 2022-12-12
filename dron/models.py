@@ -5,6 +5,7 @@ class Gas(models.Model):
     id = models.BigAutoField(primary_key=True)
     oxy = models.CharField(max_length=10)
     sensed = models.DateTimeField()
+    video_id = models.IntegerField()
 
     class Meta:
         db_table = 'DronGas'
@@ -47,4 +48,14 @@ class Dron(models.Model):
 
     class Meta:
         db_table = 'DronInfo'
+        ordering = ['id']
+
+
+class Image(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    image_url = models.CharField(max_length=255)
+    video_id = models.IntegerField()
+
+    class Meta:
+        db_table = 'DronImage'
         ordering = ['id']
