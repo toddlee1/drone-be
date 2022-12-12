@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
 
 from rest_framework.response import Response
-from .models import Gas, Video
+from .models import Gas, Video, Dron
 from rest_framework.viewsets import ModelViewSet
-from .serializers import GasSerializer, VideoSerializer
+from .serializers import GasSerializer, VideoSerializer, DronSerializer
 
 
 class GasViewSet(ModelViewSet):
@@ -33,5 +33,17 @@ class VideoViewSet(ModelViewSet):
     def retrieve(self, request, id=None, *args, **kwargs):
         queryset = Video.objects.filter(id=id).first()
         serializer = VideoSerializer(queryset)
+        return Response(serializer.data)
+
+
+class DronViewSet(ModelViewSet):
+    def list(self, request):
+        queryset = Dron.objects.all()
+        serializer = DronSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, id=None, *args, **kwargs):
+        queryset = Dron.objects.filter(id=id).first()
+        serializer = DronSerializer(queryset)
         return Response(serializer.data)
 

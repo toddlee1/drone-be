@@ -15,12 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from dron.views import GasViewSet, VideoViewSet
+from dron.views import GasViewSet, VideoViewSet, DronViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('dron/gas', GasViewSet.as_view({'get': 'list'})),
     path('dron/gas/latest', GasViewSet.as_view({'get': 'retrieve'})),
     path('dron/videos', VideoViewSet.as_view(actions={'get': 'list'}), name='video'),
-    path('dron/video/<int:id>', VideoViewSet.as_view(actions={'get': 'retrieve'}), name='video')
+    path('dron/video/<int:id>', VideoViewSet.as_view(actions={'get': 'retrieve'}), name='video'),
+    path('dron/list', DronViewSet.as_view(actions={'get': 'list'}), name='dron'),
+    path('dron/detail/<int:id>', DronViewSet.as_view(actions={'get': 'retrieve'}), name='dron')
 ]
