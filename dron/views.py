@@ -1,5 +1,8 @@
 from datetime import datetime, timedelta
 
+from rest_framework import response
+from rest_framework.exceptions import APIException
+from rest_framework.parsers import JSONParser
 from rest_framework.response import Response
 from .models import Gas, Video, Dron, Image
 from rest_framework.viewsets import ModelViewSet
@@ -67,4 +70,12 @@ class ImageViewSet(ModelViewSet):
         queryset = Image.objects.filter(id=id).first()
         serializer = ImageSerializer(queryset)
         return Response(serializer.data)
+
+    def update(self, request, id=None, *args, **kwargs):
+        queryset = Image.objects.filter(id=id).first()
+        serializer = ImageSerializer(queryset, data=JSONParser().parse(request), partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        raise APIException(400, serializer.errors)
 

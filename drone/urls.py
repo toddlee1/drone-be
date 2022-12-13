@@ -26,5 +26,6 @@ urlpatterns = [
     path('dron/list', DronViewSet.as_view(actions={'get': 'list'}), name='dron'),
     path('dron/detail/<int:id>', DronViewSet.as_view(actions={'get': 'retrieve'}), name='dron'),
     path('dron/image/list', ImageViewSet.as_view(actions={'get': 'list'}), name='image'),
-    path('dron/image/detail/<int:id>', ImageViewSet.as_view(actions={'get': 'retrieve'}), name='image')
+    path('dron/image/detail/<int:id>', ImageViewSet.as_view(actions={'get': 'retrieve'}), name='image'),
+    path('dron/image/modify/<int:id>', ImageViewSet.as_view(actions={'put': 'update'}), name='image')
 ]

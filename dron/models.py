@@ -55,6 +55,7 @@ class Image(models.Model):
     id = models.BigAutoField(primary_key=True)
     image_url = models.CharField(max_length=255)
     video_id = models.IntegerField()
+    memo = models.TextField()
 
     class Meta:
         db_table = 'DronImage'
