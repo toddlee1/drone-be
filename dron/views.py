@@ -18,17 +18,23 @@ class GasViewSet(ModelViewSet):
         #     start_at = datetime.fromtimestamp(sensed)
         #     end_at = datetime.fromtimestamp(sensed + 600)
         #     queryset = Gas.objects.filter(sensed__range=(start_at, end_at))
-        if request.GET.get('video_id') is None:
-            queryset = Gas.objects.all()
-        else:
+        if request.GET.get('video_id') is not None:
             video_id = request.GET.get('video_id')
             queryset = Gas.objects.filter(video_id=video_id)
-        serializer = GasSerializer(queryset, many=True)
+        else:
+            queryset = Gas.objects.all()
+
+        if request.GET.get('size') is not None:
+            size = request.GET.get('size')
+            serializer = GasSerializer(queryset[:int(size)], many=True)
+        else:
+            serializer = GasSerializer(queryset, many=True)
+
         return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
         video_id = request.GET.get('video_id')
-        queryset = Gas.objects.filter(video_id=video_id).latest(    'id')
+        queryset = Gas.objects.filter(video_id=video_id).latest('id')
         serializer = GasSerializer(queryset)
         return Response(serializer.data)
 
