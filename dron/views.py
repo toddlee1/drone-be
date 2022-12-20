@@ -27,7 +27,8 @@ class GasViewSet(ModelViewSet):
         return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
-        queryset = Gas.objects.latest('id')
+        video_id = request.GET.get('video_id')
+        queryset = Gas.objects.filter(video_id=video_id).latest(    'id')
         serializer = GasSerializer(queryset)
         return Response(serializer.data)
 
@@ -46,7 +47,19 @@ class VideoViewSet(ModelViewSet):
 
 class DronViewSet(ModelViewSet):
     def list(self, request):
-        queryset = Dron.objects.all()
+        queryset = Dron.objects.filter(id__range=[10001, 100000])
+        serializer = DronSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def retrieve(self, request, id=None, *args, **kwargs):
+        queryset = Dron.objects.filter(id=id).first()
+        serializer = DronSerializer(queryset)
+        return Response(serializer.data)
+
+
+class LiveViewSet(ModelViewSet):
+    def list(self, request):
+        queryset = Dron.objects.filter(id__range=[1, 100])
         serializer = DronSerializer(queryset, many=True)
         return Response(serializer.data)
 
